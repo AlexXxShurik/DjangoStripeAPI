@@ -33,7 +33,7 @@
     <!-- Итоговая цена -->
     <h3>Total Price: {{ total_price|floatformat:2 }} $</h3>
 
-    <button id="buy-button" data-object-type="order" data-object-id="{{ order.id }}" data-stripe-key="{{ stripe_public_key }}">
+    <button id="buy-button-session" data-object-type="order" data-object-id="{{ order.id }}" data-stripe-key="{{ stripe_public_key }}">
         Pay Now
     </button>
 

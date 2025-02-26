@@ -32,6 +32,29 @@ def create_checkout_session(request, id):
     return JsonResponse({"session_id": session.id})
 
 
+def create_payment_intent(request, id):
+    item = get_object_or_404(Item, id=id)
+
+    stripe_keys = settings.STRIPE_KEYS[item.currency]
+    stripe.api_key = stripe_keys['secret_key']
+
+    try:
+        intent = stripe.PaymentIntent.create(
+            amount=int(item.price * 100),
+            currency=item.currency,
+            payment_method_types=["card"],
+            description=f"Payment for {item.name}",
+            metadata={"item_id": item.id},
+        )
+        return JsonResponse({"client_secret": intent.client_secret})
+    except stripe.error.StripeError as e:
+        return JsonResponse({"error": str(e)}, status=400)
+
+
+def payment_success(request):
+    return render(request, "pay/success.html")
+
+
 def item_detail(request, id):
     item = get_object_or_404(Item, id=id)
     stripe_public_key = settings.STRIPE_KEYS[item.currency]['public_key']
