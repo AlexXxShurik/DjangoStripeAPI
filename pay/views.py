@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from .models import Item, Order
 
 
-def create_checkout_session(request, id):
+def create_checkout_session(_, id):
     item = get_object_or_404(Item, id=id)
 
     # Выбираем ключи Stripe в зависимости от валюты товара
@@ -32,7 +32,7 @@ def create_checkout_session(request, id):
     return JsonResponse({"session_id": session.id})
 
 
-def create_payment_intent(request, id):
+def create_payment_intent(_, id):
     item = get_object_or_404(Item, id=id)
 
     stripe_keys = settings.STRIPE_KEYS[item.currency]
@@ -64,7 +64,7 @@ def item_detail(request, id):
     })
 
 
-def create_checkout_session_for_order(request, order_id):
+def create_checkout_session_for_order(_, order_id):
     order = get_object_or_404(Order, id=order_id)
 
     stripe_keys = settings.STRIPE_KEYS['usd']

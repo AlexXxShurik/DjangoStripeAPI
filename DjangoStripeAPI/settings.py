@@ -36,8 +36,13 @@ STRIPE_KEYS = {
 }
 DEBUG = os.getenv("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    URL.replace("https://", "")
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    URL
+]
 
 # Application definition
 
