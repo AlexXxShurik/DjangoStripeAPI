@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.contrib import admin
+from pay.models import *
 
-# Register your models here.
+admin.site.register(Item)
+admin.site.register(Order)
+admin.site.register(Discount)
+admin.site.register(Tax)
