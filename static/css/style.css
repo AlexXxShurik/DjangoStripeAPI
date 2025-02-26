@@ -33,3 +33,14 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.card-element {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.card-errors {
+    color: #fa755a;
+    margin-top: 10px;
+}

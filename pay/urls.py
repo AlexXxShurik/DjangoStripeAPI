@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import create_checkout_session, item_detail, create_checkout_session_for_order, order_detail
+from .views import *
+
 
 urlpatterns = [
     path('buy/<int:id>/', create_checkout_session, name="buy"),

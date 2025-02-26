@@ -9,27 +9,32 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+from pathlib import Path
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 URL = os.getenv("URL")
 SECRET_KEY = os.getenv("SECRET_KEY")
-STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
-STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+STRIPE_KEYS = {
+    'usd': {
+        'public_key': os.getenv('STRIPE_PUBLIC_KEY_USD'),
+        'secret_key': os.getenv('STRIPE_API_KEY_USD'),
+    },
+    'rub': {
+        'public_key': os.getenv('STRIPE_PUBLIC_KEY_RUB'),
+        'secret_key': os.getenv('STRIPE_API_KEY_RUB'),
+    },
+}
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -91,6 +96,7 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -129,4 +135,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]

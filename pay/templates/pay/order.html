@@ -17,7 +17,21 @@
         {% endfor %}
     </ul>
 
-    <h3>Total Price: ${{ total_price|floatformat:2 }}</h3>
+    <!-- Чистая цена -->
+    <p>Subtotal: {{ subtotal|floatformat:2 }}</p>
+
+    <!-- Скидка (если есть) -->
+    {% if order.discount %}
+        <p>Discount ({{ order.discount.percent_off }}%): -${{ discount_amount|floatformat:2 }}</p>
+    {% endif %}
+
+    <!-- Налог (если есть) -->
+    {% if order.tax %}
+        <p>Tax ({{ order.tax.display_name }} {{ order.tax.percentage }}%): ${{ tax_amount|floatformat:2 }}</p>
+    {% endif %}
+
+    <!-- Итоговая цена -->
+    <h3>Total Price: {{ total_price|floatformat:2 }} $</h3>
 
     <button id="buy-button" data-object-type="order" data-object-id="{{ order.id }}" data-stripe-key="{{ stripe_public_key }}">
         Pay Now

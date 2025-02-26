@@ -11,7 +11,7 @@
 <body>
     <h1>{{ item.name }}</h1>
     <p>{{ item.description }}</p>
-    <h3>Price: ${{ item.price|floatformat:2 }}</h3>
+    <h3>Price: {{ item.price|floatformat:2 }} {{ item.currency }}</h3>
 
     <button id="buy-button" data-object-type="item" data-object-id="{{ item.id }}" data-stripe-key="{{ stripe_public_key }}">
         Buy Now
